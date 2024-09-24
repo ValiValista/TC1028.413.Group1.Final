@@ -12,7 +12,7 @@
     ## 7. Merge changes
 
 
-# TODO: Sketch out the program flow
+# TODO: Sketch out the program flow (This is not final)
 # 1. Get the user's name
 # 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)
 # 3. Remove 1 inner 2x2 (Henceforth referred to as GRID) tile to enable sliding
