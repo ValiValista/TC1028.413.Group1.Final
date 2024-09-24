@@ -1,6 +1,6 @@
 # t`odo = to do list, this shows up in github and IDEs as a t`odo list
 # How to use GitHub documentation https://docs.github.com/en/get-started/start-your-journey/hello-world
-## Github on VSCODe https://code.visualstudio.com/docs/editor/github
+## Github on VSCODE https://code.visualstudio.com/docs/editor/github
 ## Github on PyCharm https://www.jetbrains.com/help/pycharm/github.html
     #How to use GitHub
     ## 1. Create a new branch
