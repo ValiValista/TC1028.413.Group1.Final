@@ -29,6 +29,7 @@ from random import randint
 def read_user_score(): #Function to read the user's score from a file
     try:
         #TODO Read the users score from a file
+        return username, score, difficulty
         pass
     except FileNotFoundError: #If the file is not found, print the following message
         print("No save file found")
@@ -127,6 +128,15 @@ def remove_number(): #Function to remove numbers from the GRIDs
 def display_grid(): #Function to display the CONTAINER and GRID to the user, overlap the KILLER GRID on top of the CONTAINER
     pass #TODO IMPLEMENT DISPLAY GRID, USE A GRAPHICAL INTERFACE LIBRARY
 
+def create_game():
+    #This functions combines all the game board creation functions into one and then displays the game board
+    sudoku_2x2()
+    remove_tile()
+    killer_grid()
+    randomize_tile()
+    remove_number()
+    display_grid()
+
 def slide_tile(): #Function to enable the user to slide the GRID tiles
     pass #TODO IMPLEMENT SLIDE TILE
 
@@ -139,20 +149,46 @@ def check_user_input(): #Function to check if the user's CONTAINER matches the o
 def win(): #Function to display a message if the user wins
     pass #TODO IMPLEMENT WIN, STORE THE USER'S SCORE
 
+def scoreboard(): #Function to display the scoreboard
+    username, score, difficulty = read_user_score()  # Read the user's score
+    pass  # Print the user's score
+
+def menu(): #Function to display the menu
+    key_men = check_input_validity_int(""" 
+Welcome to crasyudoku!
+1. Play
+2. Highscores
+3. Exit
+""")
+    if key_men == 1:
+        main
+    elif key_men == 2:
+        scoreboard()
+    elif key_men == 3:
+        exit()
+    else:
+        print("Please choose a valid option")
+        menu()
+
 def main():
     while True:
         try:
+            # Before the game
             username = create_user() #Create the user
             difficulty = difficulty_choice() #Choose the difficulty
 
+            #Start the game
+            time = clock() #Start the clock
+            create_game()
 
-            time = clock(0) #Start the clock
+            #Game functions
+            get_user_input()
+            check_user_input()
 
-
+            #Win functions
             score = calculate_score(difficulty, time)  # Calculate the user's score
-
             store_user_score(username,score,difficulty) #Store the user's score
-            #read_user_score() #Read the user's score, only enable if you decide to enable score display
+
             break
         except:
             print("An error occurred, please try again")
