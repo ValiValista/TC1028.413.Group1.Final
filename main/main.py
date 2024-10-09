@@ -2,8 +2,8 @@ from time import sleep
 from random import randint
 
 # How to use GitHub documentation https://docs.github.com/en/get-started/start-your-journey/hello-world
-## Github on VSCODE
-## Github on PyCharm https://www.jetbrains.com/help/pycharm/github.html
+## GitHub on VSCODE
+## GitHub on PyCharm https://www.jetbrains.com/help/pycharm/github.html
     #How to use GitHub
     ## 1. Create a new branch
     ## 2. Make changes to the branch
