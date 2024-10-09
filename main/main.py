@@ -1,8 +1,8 @@
 from time import sleep
 from random import randint
-
+# test
 # 1. Get the user's name
-# 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)
+# 2. Create aa valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)    
 # 3. Remove 1 inner 2x2 (Henceforth referred to as GRID) tile to enable sliding
 # 4. Create a valid killer grid (The one that shows the sums for the valid sudoku grid)
 # 5. Randomize the 3 remaining 2x2 tiles position in reference to the outer 2x2 container (Henceforth referred to as CONTAINER)
