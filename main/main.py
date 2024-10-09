@@ -1,7 +1,6 @@
 from time import sleep
 from random import randint
 
-# t`odo = to do list, this shows up in github and IDEs as a t`odo list
 # How to use GitHub documentation https://docs.github.com/en/get-started/start-your-journey/hello-world
 ## Github on VSCODE
 ## Github on PyCharm https://www.jetbrains.com/help/pycharm/github.html
