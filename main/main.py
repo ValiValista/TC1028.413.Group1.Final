@@ -1,20 +1,8 @@
 from time import sleep
 from random import randint
 
-# How to use GitHub documentation https://docs.github.com/en/get-started/start-your-journey/hello-world
-## GitHub on VSCODE
-## GitHub on PyCharm https://www.jetbrains.com/help/pycharm/github.html
-    #How to use GitHub
-    ## 1. Create a new branch
-    ## 2. Make changes to the branch
-    ## 3. Commit changes
-    ## 4. Push changes to the branch
-    ## 5. Create a pull request
-    ## 6. Review changes
-    ## 7. Merge changes
-
 # 1. Get the user's name
-# 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)
+# 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)    
 # 3. Remove 1 inner 2x2 (Henceforth referred to as GRID) tile to enable sliding
 # 4. Create a valid killer grid (The one that shows the sums for the valid sudoku grid)
 # 5. Randomize the 3 remaining 2x2 tiles position in reference to the outer 2x2 container (Henceforth referred to as CONTAINER)
