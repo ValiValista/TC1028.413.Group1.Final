@@ -49,6 +49,7 @@ def check_input_validity_str(f_prompt): #Function to check if any inputted strin
         try: #Try to convert the input to a string
             f_answer = input(f_prompt)
             if f_answer != "": #If the input is not empty, return the input
+                f_answer = f_answer.strip() #Remove any leading or trailing white spaces
                 return f_answer #Return the input
             else: #If the input is empty, print the following message
                 print("Please enter a non-empty input.")
