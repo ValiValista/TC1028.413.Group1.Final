@@ -1,6 +1,6 @@
 from time import sleep
 from random import randint
-#test
+
 # 1. Get the user's name
 # 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)    
 # 3. Remove 1 inner 2x2 (Henceforth referred to as GRID) tile to enable sliding
