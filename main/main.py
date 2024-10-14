@@ -13,6 +13,13 @@ from random import randint
 # 9. Check if the user's CONTAINER matches the originally generated CONTAINER
 # 10. If correct, say YOU WIN, else: do not end the game, the user is able to remove only tiles they have places
 
+""" Función negra que muestra el inicio de una matriz random
+Función para matriz roja que se mueve en el eje vertical (o sea para arriba o para abajo)
+Función para matriz azul que se mueve en el eje horizontal (de lados)
+Funcion para matriz verde que se mueve en diagonal
+1er nivel es de 2 * 2  """
+
+
 def read_user_score(): #Function to read the user's score from a file
     try:
         #TODO Read the users score from a file
