@@ -31,7 +31,7 @@ def add_new_tile(board):
         if random.random() < 0.9:
             board[r][c] = 2
         else:
-            board[r][c] = 4
+            board[r][c] = 4 #Si es mayor a 0.9 pondrá el numero 4
 
 
 def print_board(board):
