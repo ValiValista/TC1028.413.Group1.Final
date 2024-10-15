@@ -412,7 +412,6 @@ def play_game2():
 
 def main():
     while True:
-        file.close()
         user_choice = get_valid_input_int(
             """Quieres jugar 2048: \n1. Sin límite de tiempo \n2. Límite de tiempo (5seg para cada movimiento) \n \nPresiona el numero indicado: """)
 
