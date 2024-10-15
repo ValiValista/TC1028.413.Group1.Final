@@ -58,20 +58,20 @@ def print_board(board): #Se usa diccionario para colores ANSI
     print()
 
 def slide_and_combine_row(row):
-    new_row = [num for num in row if num != 0]  # Remove zeros
-    for i in range(len(new_row) - 1):
-        if new_row[i] == new_row[i + 1]:
-            new_row[i] *= 2
-            new_row[i + 1] = 0
+    new_row = [num for num in row if num != 0]  #Nueva lista (new_row) que contiene todos los elementos de la fila original (row), pero eliminando los ceros.
+    for i in range(len(new_row) - 1): #Se recorre cada número en la nueva lista (new_row) para encontrar fichas que puedan combinarse
+        if new_row[i] == new_row[i + 1]: #Verifica si dos fichas juntas son iguales. Si lo son, significa que se pueden combinar
+            new_row[i] *= 2 #Si las dos fichas son iguales, se combinan y se multiplica el valor de la primera por 2.
+            new_row[i + 1] = 0 #la segunda ficha (la que estaba a la derecha) se establece en 0 para indicar que la ficha ha sido combinada y ese ahora está vacia
     final_row = [num for num in new_row if num != 0]  # Remove zeros again
-    final_row += [0] * (4 - len(final_row))  # Add zeros to the end
+    final_row += [0] * (4 - len(final_row))  # Se agrega al final
     return final_row
 
 def move_left(board):
-    return [slide_and_combine_row(row) for row in board]
+    return [slide_and_combine_row(row) for row in board] #tomar cada fila (row) del tablero (board) y aplicar la función slide_and_combine_row a esa fila.
 
 def rotate_board(board):
-    return [list(row) for row in zip(*board[::-1])]  # Rotate the board
+    return [list(row) for row in zip(*board[::-1])]  # Rotate the board #::-1 Invierte el orden de las filas del tablero. Al invertir el tablero las columnas son mis nuevas filas
 
 def move(board, direction):
     for _ in range(direction):
@@ -93,7 +93,7 @@ def is_game_over(board):
 def get_board_sum(board):
     return sum(sum(row) for row in board)  # Calculate the sum of all numbers on the board
 
-def save_to_csv(user_name, score, total_time):
+def save_to_csv(user_name, score, total_time): 
     encabezadoResultados = 'Nombre, Puntaje, Tiempo\n'
     file_path = 'game_scores.csv'
     try:
@@ -174,22 +174,38 @@ def play_game2():
     global move_input
     while True:
         print_board(board)
-        print("Instructions \nw: up \ns: down \na: left \nd: right")  # Write clear and precise instructions
+        print("Instructions \nW: up \nS: down \nA: left \nD: right")  # Write clear and precise instructions
         move_input = None
         input_thread = threading.Thread(target=get_user_input)  # Create a thread for user input
         input_thread.start()
         input_thread.join(timeout=5)  # Wait for user input within 5 seconds
         if move_input is None:  # Check if the user did not enter a move within the time limit
             print("\nTime's up! You took too long to make a move.\nGame Over!\n")
+            print_board(board)
+            end_time = time.time()
+            final_time = (end_time - start_time) / 60  # Calculate total game time
+            board_sum = get_board_sum(board)  # Get the sum of all numbers
+            print(f"Game Over, {user_name}! \nFinal Score: {board_sum} \nTotal Time: {final_time:.2f} minutes")
+            save_to_csv(user_name, board_sum, final_time)
+            highest_score_data = get_highest_score()
+            if highest_score_data:
+                name, high_score, time_played = highest_score_data
+                if user_name == name and board_sum == high_score:
+                    print(
+                        f"Congratulations {user_name}! \nYou have the highest score with a score: {high_score} \nwith time of {time_played} minutes.")
+                else:
+                    print(
+                        f"The highest score so far is by {name} \n     Score of {high_score} \n     Time: {time_played} minutes.")
             time.sleep(1)
-            break
-        if move_input == "w":
+            break # End the game
+
+        if move_input == "w" or "W":
             direction = 3
-        elif move_input == "s":
+        elif move_input == "s" or "S":
             direction = 1
-        elif move_input == "a":
+        elif move_input == "a" or "A":
             direction = 0
-        elif move_input == "d":
+        elif move_input == "d" or "D":
             direction = 2
         else:
             print("Invalid move! Please enter 'w', 'a', 's', or 'd'.")
@@ -218,9 +234,9 @@ def main():
     while True:
         user_choice = get_valid_input_int(
             """Do you want to play 2048: \n1. No time limit \n2. Time limit (5 seconds for each move) \n \nPress the indicated number: """)
-        if user_choice == 1:
+        if user_choice == 1: #The if statment says that if the user choose 1, will play game 1
             play_game_1()
-        elif user_choice == 2:
+        elif user_choice == 2: #The statment that says if user chooses 2, will play game 2
             play_game2()
         else:
             print("Invalid choice. Please enter 1 or 2.")
