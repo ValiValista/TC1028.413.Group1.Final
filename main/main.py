@@ -1,6 +1,3 @@
-from time import sleep
-from random import randint
-
 # 1. Get the user's name
 # 2. Create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID)    
 # 3. Remove 1 inner 2x2 (Henceforth referred to as GRID) tile to enable sliding
@@ -13,27 +10,35 @@ from random import randint
 # 9. Check if the user's CONTAINER matches the originally generated CONTAINER
 # 10. If correct, say YOU WIN, else: do not end the game, the user is able to remove only tiles they have places
 
-""" Función negra que muestra el inicio de una matriz random
+"""
+Función negra que muestra el inicio de una matriz random
 Función para matriz roja que se mueve en el eje vertical (o sea para arriba o para abajo)
 Función para matriz azul que se mueve en el eje horizontal (de lados)
 Funcion para matriz verde que se mueve en diagonal
-1er nivel es de 2 * 2  """
+1er nivel es de 2 * 2  
+"""
+import random
+from os import remove
+from random import randint
+from tkinter.messagebox import RETRY
+
+from numpy.matrixlib.defmatrix import matrix
 
 
-def read_user_score(): #Function to read the user's score from a file
-    try:
-        #TODO Read the users score from a file
-        return username, score, difficulty
-        pass
-    except FileNotFoundError: #If the file is not found, print the following message
-        print("No save file found")
-
-def store_user_score(f_username, f_score, f_difficulty): #Function to store the user's score in a file
-    try:
-        #TODO Write the user's name and score to the file
-        pass
-    except FileNotFoundError: #If the file is not found, print the following message
-        print("No save file found")
+# def read_user_score(): #Function to read the user's score from a file
+#     try:
+#         #TODO Read the users score from a file
+#         return username, score, difficulty
+#         pass
+#     except FileNotFoundError: #If the file is not found, print the following message
+#         print("No save file found")
+#
+# def store_user_score(f_username, f_score, f_difficulty): #Function to store the user's score in a file
+#     try:
+#         #TODO Write the user's name and score to the file
+#         pass
+#     except FileNotFoundError: #If the file is not found, print the following message
+#         print("No save file found")
 
 def create_user(): #Function to store the user's score, score is based on a value given to each difficulty divided by time taken to complete the puzzle
     f_name = check_input_validity_str("What is your name? ") #Ask the user for their name
@@ -67,8 +72,6 @@ def difficulty_choice(): #Function to ask the user to choose a difficulty
 What difficulty would you like to play? 
 1.Easy 
 2.Medium 
-3.Sudoku Master
-4.Impossible 
 """)
     if f_difficulty == 1:
         print("Easy difficulty chosen")
@@ -78,44 +81,39 @@ What difficulty would you like to play?
         print("Medium difficulty chosen")
         return 2
 
-    elif f_difficulty == 3:
-        print("Sudoku Master difficulty chosen")
-        return 3
-
-    elif f_difficulty == 4:
-        print("Impossible difficulty chosen")
-        return 4
-
     else:
         print("Please choose a valid difficulty")
         difficulty_choice() #If the user does not choose a valid difficulty, ask them to choose again
 
-def clock(): #Function to start the clock
-    pass #TODO IMPLEMENT CLOCK
-    return 0 #Placeholder return value
+# def clock(): #Function to start the clock
+#     pass #TODO IMPLEMENT CLOCK
+#     return 0 #Placeholder return value
 
-def calculate_score(f_difficulty, f_time): #Function to calculate the user's score
-    if f_difficulty == "easy": #If the difficulty is easy, the score is 40 divided by the time taken to complete the puzzle
-        f_score = 40/f_time
-    elif f_difficulty == "medium": #If the difficulty is medium, the score is 30 divided by the time taken to complete the puzzle
-        f_score = 30/f_time
-    elif f_difficulty == "sudoku master": #If the difficulty is sudoku master, the score is 20 divided by the time taken to complete the puzzle
-        f_score = 20/f_time
-    elif f_difficulty == "impossible": #If the difficulty is impossible, the score is 10 divided by the time taken to complete the puzzle
-        f_score = 10/f_time
-    return f_score #Return the score
 
-def sudoku_2x2(): #Function to create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID, GRID is inside CONTAINER)
-    pass #TODO IMPLEMENT SUDOKU 2x2, REMEMBER TO STORE THE VALID CONTAINER AND GRIDS
+def sudoku_2x2_inner(): #Function to create a valid sudoku grid composed of a CONTAINER, GRID, and TILES (Tiles are inside GRID, GRID is inside CONTAINER)
+    matrix_inner = [[random.randint(1, 4) for _ in range(2)] for _ in range(2)]
+    matrix_inner = remove_tile(matrix_inner)
+    return matrix_inner
 
-def remove_tile(): #Function to remove 1 inner 2x2 tile to enable sliding
-    pass #TODO IMPLEMENT REMOVE TILE
 
-def killer_grid(): #Function to create a valid killer grid (The one that shows the sums for the valid sudoku grid)
-    pass #TODO IMPLEMENT KILLER GRID
+def remove_tile(matrix):  # Function to remove 1 inner 2x2 tile to enable sliding
+    matrix[random.randint(0, 1), random.randint(0, 1)] = 0
+
+
+def sudoku_2x2_outer():
+    matrix_inner1 = sudoku_2x2_inner()
+    matrix_inner2 = sudoku_2x2_inner()
+    matrix_inner3 = sudoku_2x2_inner()
+    matrix_inner4 = sudoku_2x2_inner()
+    matrix_outer = [[matrix_inner1, matrix_inner2], [matrix_inner3, matrix_inner4]]
+    return matrix_outer
 
 def randomize_tile(): #Function to randomize the 3 remaining 2x2 tiles position in reference to the outer 2x2 container
-    pass #TODO IMPLEMENT RANDOMIZE TILE
+    matrix_outer = sudoku_2x2_outer()
+
+
+
+
 
 def remove_number(): #Function to remove numbers from the GRIDs
     pass #TODO IMPLEMENT REMOVE NUMBER
@@ -125,9 +123,8 @@ def display_grid(): #Function to display the CONTAINER and GRID to the user, ove
 
 def create_game():
     #This functions combines all the game board creation functions into one and then displays the game board
-    sudoku_2x2()
+    sudoku_2x2_outer()
     remove_tile()
-    killer_grid()
     randomize_tile()
     remove_number()
     display_grid()
@@ -145,7 +142,7 @@ def win(): #Function to display a message if the user wins
     pass #TODO IMPLEMENT WIN, STORE THE USER'S SCORE
 
 def scoreboard(): #Function to display the scoreboard
-    username, score, difficulty = read_user_score()  # Read the user's score
+    # username, score, difficulty = read_user_score()  # Read the user's score
     pass  # Print the user's score
 
 def menu(): #Function to display the menu
@@ -165,15 +162,30 @@ Welcome to crasyudoku!
         print("Please choose a valid option")
         menu()
 
+# def calculate_score(f_time): #Function to calculate the user's score
+#     f_difficulty= difficulty_choice()
+#     if f_difficulty == 1: #If the difficulty is easy, the score is 40 divided by the time taken to complete the puzzle
+#         f_score = 40/f_time
+#     elif f_difficulty == 2: #If the difficulty is medium, the score is 30 divided by the time taken to complete the puzzle
+#         f_score = 30/f_time
+#     elif f_difficulty == 3: #If the difficulty is sudoku master, the score is 20 divided by the time taken to complete the puzzle
+#         f_score = 20/f_time
+#     elif f_difficulty == 4: #If the difficulty is impossible, the score is 10 divided by the time taken to complete the puzzle
+#         f_score = 10/f_time
+#     return f_score #Return the score
+
 def main():
     while True:
         try:
             # Before the game
             username = create_user() #Create the user
             difficulty = difficulty_choice() #Choose the difficulty
+            inner_sudoku= sudoku_2x2_inner(difficulty)
+            sudoku_2x2_outer(inner_sudoku)
+
 
             #Start the game
-            time = clock() #Start the clock
+            # time = clock() #Start the clock
             create_game()
 
             #Game functions
@@ -181,8 +193,8 @@ def main():
             check_user_input()
 
             #Win functions
-            score = calculate_score(difficulty, time)  # Calculate the user's score
-            store_user_score(username,score,difficulty) #Store the user's score
+            # score = calculate_score(difficulty, time)  # Calculate the user's score
+            # store_user_score(username,score,difficulty) #Store the user's score
 
             break
         except:

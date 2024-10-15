@@ -4,12 +4,13 @@ from PySide6.QtGui import *
 from PySide6.QtWidgets import *
 from random import randint
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.title = "ProyectoTitulo"
         self.setWindowTitle(self.title)
-    
+
         # Crear el QStackedWidget para manejar diferentes pantallas
         self.stacked_widget = QStackedWidget()
         self.setCentralWidget(self.stacked_widget)
@@ -53,7 +54,7 @@ class MainWindow(QMainWindow):
         for i in range(2):
             for j in range(2):
                 self.boton_matriz[i][j].setFixedHeight(70)  # Botones más pequeños
-                self.boton_matriz[i][j].setFixedWidth(70)   # Botones más pequeños
+                self.boton_matriz[i][j].setFixedWidth(70)  # Botones más pequeños
                 self.boton_matriz[i][j].setStyleSheet('background-color: black; color: white;')
                 self.boton_matriz[i][j].setEnabled(False)  # Desactivar la interacción de los botones
 
@@ -64,16 +65,16 @@ class MainWindow(QMainWindow):
         for i in range(2):
             for j in range(2):
                 grid_layout.addWidget(self.boton_matriz[i][j], i + 1, j)
-        
+
         # Botón "Start" que ejecutará la función cambiar_color
         self.start_button = QPushButton("Start")
         self.start_button.setStyleSheet('background-color: green; color: white;')  # Botón Start verde
-        self.start_button.clicked.connect(self.iniciar_cambio_color)
+        self.start_button.clicked.connect(self.cambiar_colores_todos)
         grid_layout.addWidget(self.start_button, 3, 0, 1, 2)  # Colocamos el botón Start en la fila 3
 
         # Establecer márgenes y espacios entre los elementos de la cuadrícula
         grid_layout.setHorizontalSpacing(5)  # Espacio horizontal entre botones
-        grid_layout.setVerticalSpacing(5)    # Espacio vertical entre botones
+        grid_layout.setVerticalSpacing(5)  # Espacio vertical entre botones
         grid_layout.setContentsMargins(10, 10, 10, 10)  # Márgenes alrededor de la cuadrícula
 
         # Crear un widget para la pantalla de juego
@@ -110,7 +111,7 @@ class MainWindow(QMainWindow):
 
     # Función para cambiar el color de todos los botones (menos el blanco) al mismo color aleatorio
     def cambiar_colores_todos(self):
-        # Generar un color aleatorio para todos los botones
+        # Generar un color aleatorio para todos los botones (menos el botón blanco)
         color_random = randint(1, 3)
         color = ""
         if color_random == 1:
@@ -126,10 +127,17 @@ class MainWindow(QMainWindow):
                 if self.boton_matriz[i][j] != self.boton_blanco:
                     self.boton_matriz[i][j].setStyleSheet(f'background-color: {color}; color: white;')
 
-    # Función llamada cuando el botón Start es presionado
-    def iniciar_cambio_color(self):
-        # Inicia el cambio de color de todos los botones menos el blanco después de 5 segundos
-        QTimer.singleShot(5000, self.cambiar_colores_todos)  # 5000 ms = 5 segundos
+        # Después de 5 segundos, revertir los colores a negro (menos el botón blanco)
+        QTimer.singleShot(5000, self.restablecer_colores)
+
+    def restablecer_colores(self):
+        # Restablecer todos los botones a su color original (negro), excepto el botón blanco
+        for i in range(2):
+            for j in range(2):
+                if self.boton_matriz[i][j] != self.boton_blanco:
+                    self.boton_matriz[i][j].setStyleSheet('background-color: black; color: white;')
+
+    # Logica de juego
 
     def acomodo(self):
         # Restablecer todos los botones
@@ -152,6 +160,7 @@ class MainWindow(QMainWindow):
         # Cambiar el botón en esa posición a blanco
         self.boton_blanco = self.boton_matriz[i][j]
         self.boton_blanco.setStyleSheet('background-color: white; color: black;')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
