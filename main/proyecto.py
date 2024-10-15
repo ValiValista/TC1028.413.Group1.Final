@@ -3,7 +3,7 @@ import time
 import threading
 import os
 
-# Function to validate that the input is an integer and not something else in the menu
+"""Function to validate that the input is an integer and not something else in the menu"""
 def get_valid_input_int(prompt):
     while True:
         try:
@@ -15,6 +15,7 @@ def get_valid_input_int(prompt):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
+"""Function to initialize the board"""
 def initialize_board():
     board = [[0] * 4 for _ in range(4)]  # Create a 4x4 board initialized with zeros
     add_new_tile(board)  # Add the first random number
